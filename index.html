@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendario Divino</title>
+    <meta name="theme-color" content="#fdf6e3"/>
+
+    <!-- Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- React and ReactDOM from CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel for in-browser JSX/TSX transpilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Google Fonts for antique style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Inline Manifest for PWA -->
+    <link rel="manifest" href='data:application/manifest+json;charset=utf-8,{"short_name":"Calendario","name":"Calendario Divino","icons":[{"src":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIiB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNWEzYTIyIiBzdHJva2Utd2lkdGg9IjEyIj48cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIGQ9Ik05NiAyMnYxNDgiLz48cGF0aCBkPSJNOSAyNmMwIDM4LjY2IDYyLjc5IDcwIDk2IDcwczk2LTMxLjM0IDk2LTcwIi8+PHBhdGggZD0iTTkgMTY2YzAgLTM4LjY2IDYyLjc5LTcwIDk2LTcwczk2IDMxLjM0IDk2IDcwIi8+PC9nPjwvc3ZnPg==","type":"image/svg+xml","sizes":"192x192"},{"src":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNWEzYTIyIiBzdHJva2Utd2lkdGg9IjI0Ij48cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIGQ9Ik0yNTYgNDR2Mjk2Ii8+PHBhdGggZD0iTTE4IDUyYzAgNzcuMzIgMTI1LjU4IDE0MCAxOTIgMTQwczE5Mi02Mi6NjggMTkyLTE0MCIvPjxwYXRoIGQ9Ik0xOCAzMzJjMCAtNzcuMzIgMTI1LjU4LTE0MCAxOTItMTQwczE5MiA2Mi6NjggMTkyIDE0MCIv+PC9nPjwvc3ZnPg==","type":"image/svg+xml","sizes":"512x512"}],"start_url":".","display":"standalone","theme_color":"#fdf6e3","background_color":"#fdf6e3"}' />
+
+    <style>
+        body {
+            background-color: #fdf6e3; /* Parchment color */
+            font-family: 'Lato', sans-serif;
+            color: #5a3a22; /* Dark brown text */
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48ZmVDb2xvck1hdHJpeCB0eXBlPSJzYXR1cmF0ZSIgdmFsdWVzPSIwIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==');
+        }
+        .font-title {
+            font-family: 'Cinzel', serif;
+        }
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 300ms, transform 300ms;
+        }
+        .modal-exit {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .modal-exit-active {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 300ms, transform 300ms;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0"
+  }
+}
+</script>
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+    <!-- The React application logic is now in index.tsx -->
+    <script type="text/babel" src="index.tsx"></script>
+    
+    <script>
+      // Service Worker Registration
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('SW registered.', reg))
+            .catch(err => console.log('SW registration failed: ', err));
+        });
+      }
+    </script>
+</body>
+</html>
